@@ -26,11 +26,16 @@ Arguments can be passed in property\value pairs, much in the same way as you wou
 - Properties can only contain word-characters: `a-z`, `0-9` or underscores.
 - Values must be enclosed in double-quotes
 - Values can not contain double-quotes (even if escaped)
-- Empty values are allowed, i.e. `property=""`. But properties without values are not.
+- Empty values are allowed, i.e. `property=""`. Properties without values are not allowed.
 
 ## Handles
 
-Handles are defined as static methods on the `Shortcodes` class. You can add handles by adding additional static methods:
+Handles are defined as static methods on the `Shortcodes` class. You can add handles by adding additional static methods to the class.
+
+- Each proprety-value combination is passed as a hash to the first argument.
+- All properties are passed as symbols, i.e. `:title` in the sample code below.
+- All values are passed as strings
+- If there is more than one property with the same name, the property value will instead be an array of strings.
 
 ```ruby
 class Shortcodes

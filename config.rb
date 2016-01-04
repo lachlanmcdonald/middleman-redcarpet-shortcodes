@@ -17,7 +17,18 @@ class Shortcodes
 		# Create hash of the the provided arguments
 		snippet.slice((2 + handle.size)..-3).scan(/\w+="[^"]+"/).each do |x|
 			property, value = x.split(/\=/)
-			args[property.to_sym] = value.slice(1..-2)
+			property = property.to_sym
+			value = value.slice(1..-2)
+
+			# When multiple properties are used, store each of the values
+			# as an array, instead of overwriting each.
+			if not args.has_key? property
+				args[property] = value
+			elsif args[property].is_a? Array
+				args[property].push value
+			else
+				args[property] = [args[property], value]
+			end
 		end
 
 		# Check if a method exists for the provided handle
